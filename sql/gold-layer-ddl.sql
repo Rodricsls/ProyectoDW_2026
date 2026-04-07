@@ -1,5 +1,3 @@
--- ---------- DIMENSIONES ----------
-
 -- Dimensión Cliente
 CREATE TABLE IF NOT EXISTS gold.dim_customer (
     customer_key Int32,
@@ -68,7 +66,7 @@ CREATE TABLE IF NOT EXISTS gold.dim_store (
 ENGINE = ReplacingMergeTree(_valid_from)
 ORDER BY store_key;
 
--- Dimensión Empleado (Staff)
+-- Dimensión Staff
 CREATE TABLE IF NOT EXISTS gold.dim_staff (
     staff_key Int32,
     staff_id Int32,
@@ -86,9 +84,7 @@ CREATE TABLE IF NOT EXISTS gold.dim_staff (
 ENGINE = ReplacingMergeTree(_valid_from)
 ORDER BY staff_key;
 
--- Dimensión Fecha (Tiempo)
--- Nota: Las dimensiones de tiempo suelen ser estáticas, pero agregamos valid_from 
--- por consistencia en la arquitectura o si necesitas recalcular feriados/fines de semana.
+-- Dimensión Date 
 CREATE TABLE IF NOT EXISTS gold.dim_date (
     date_key      Int32,
     full_date     Date,
@@ -106,9 +102,7 @@ ENGINE = MergeTree()
 ORDER BY date_key;
 
 
--- ---------- TABLAS DE HECHOS (FACT TABLES) ----------
-
--- Tabla Puente: Hechos de Actores por Película (Bridge Table)
+-- Fact table film_actor
 CREATE TABLE IF NOT EXISTS gold.fact_film_actor (
     film_key Int32,
     actor_key Int32,
@@ -117,7 +111,7 @@ CREATE TABLE IF NOT EXISTS gold.fact_film_actor (
 ENGINE = ReplacingMergeTree(_valid_from)
 ORDER BY (film_key, actor_key);
 
--- Tabla de Hechos Principal: Rentas y Pagos combinados
+-- Fact table rental_payment
 CREATE TABLE IF NOT EXISTS gold.fact_rental_payment (
     rental_id Int32,
     payment_id Int32,

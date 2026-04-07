@@ -1,9 +1,3 @@
--- ============================================================
--- Silver Layer DDL — Sakila Schema (ClickHouse / ReplacingMergeTree)
--- All fields are NOT Nullable (cleaned/validated data).
--- Deduplication based on _processed_at (keeps latest version).
--- ============================================================
-
 -- ---------- actor ----------
 CREATE TABLE IF NOT EXISTS silver.actor (
     actor_id      Int32,
